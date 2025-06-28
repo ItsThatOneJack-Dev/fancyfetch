@@ -5,7 +5,7 @@
   <img alt="ItsThatOneJack, Copyright, All Rights Reserved Unless Stated Otherwise. Follow the license!" src="https://itoj.dev/embed/Bwatermark.png">
 </picture>
 </br></br>
-This work is licensed under the terms of the content of the `LICENSE` file.
+This work is licensed under the terms of the content of the LICENSE file.
 </br></br>
 Meowfetch, terminal fetch utility for cats and humans alike!
 Made with ❤️ by ItsThatOneJack!
