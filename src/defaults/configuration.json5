@@ -1,0 +1,42 @@
+{
+    // This is a JSON5 file, it uses JSON syntax but supports comments.
+    // It also supports trailing commas, so don't worry about them!
+
+
+
+    // As part of Meowfetch's limitless customisability, you can create your own widgets.
+    // Beware: Widgets execute code, make sure you know what the code will do.
+
+    // Meowfetch is not responsible for any damage you, or someone else cause using custom widgets!
+
+    // To make a widget, make a Python file in the `widgets` directory.
+    // The file's name (excluding `.py`) is what the widget will be called.
+    // The file must contain a class named `Widget`, which must have a method named `Get()`.
+    // `Get()` will be provided no arguments, but should return something that can be converted to a string, this is the value of the widget.
+
+    // The order in which to display widgets.
+    "layout":[
+        "hello",
+        "datetime",
+        "credits"
+    ],
+
+    ////////////////////// ASCII ART CONFIGURATION //////////////////////
+    "display_ascii": true, // If false, the rest of this section will be ignored.
+    "ascii_location": "left", // Valid values are "top", "bottom", "left", and "right".
+
+    // If `ascii_location` is "top" or "bottom", this is the number of blank lines to add between the layout and ASCII art.
+    // If `ascii_location` is "left" or "right", this is the number of spaces to add between the layout and ASCII art.
+    "spacing": 5,
+
+    // If you define the ascii here, you need to escape backslashes and single or double quotes by using a backslash before it.
+    // Example: `\` should become `\\`, and `"` should become `\"`.
+    "ascii":[
+        " __  __  ____  _____  _    _  ____  ____  ____  ___  _   _ ",
+        "(  \\/  )( ___)(  _  )( \\/\\/ )( ___)( ___)(_  _)/ __)( )_( )",
+        " )    (  )__)  )(_)(  )    (  )__)  )__)   )( ( (__  ) _ ( ",
+        "(_/\\/\\_)(____)(_____)(__/\\__)(__)  (____) (__) \\___)(_) (_)",
+        "Meowfetch - A terminal fetch utility for cats and humans alike!",
+        ""
+    ],
+}
