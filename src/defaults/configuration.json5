@@ -16,9 +16,9 @@
 
     // The order in which to display widgets.
     "layout":[
-        "hello",
-        "datetime",
-        "credits"
+        "os",
+        "hostname",
+        "architecture"
     ],
 
     ////////////////////// ASCII ART CONFIGURATION //////////////////////
@@ -32,11 +32,13 @@
     // If you define the ascii here, you need to escape backslashes and single or double quotes by using a backslash before it.
     // Example: `\` should become `\\`, and `"` should become `\"`.
     "ascii":[
-        " __  __  ____  _____  _    _  ____  ____  ____  ___  _   _ ",
-        "(  \\/  )( ___)(  _  )( \\/\\/ )( ___)( ___)(_  _)/ __)( )_( )",
-        " )    (  )__)  )(_)(  )    (  )__)  )__)   )( ( (__  ) _ ( ",
-        "(_/\\/\\_)(____)(_____)(__/\\__)(__)  (____) (__) \\___)(_) (_)",
-        "Meowfetch - A terminal fetch utility for cats and humans alike!",
-        ""
+        "{{bold}}{{purple}}______                      __     _       _     ",
+        "{{bold}}{{purple}}|  ___|                    / _|   | |     | |    ",
+        "{{bold}}{{purple}}| |_ __ _ _ __   ___ _   _| |_ ___| |_ ___| |__  ",
+        "{{bold}}{{purple}}|  _/ _` | '_ \\ / __| | | |  _/ _ \\ __/ __| '_ \\ ",
+        "{{bold}}{{purple}}| || (_| | | | | (__| |_| | ||  __/ || (__| | | |",
+        "{{bold}}{{purple}}\\_| \\__,_|_| |_|\\___|\\__, |_| \\___|\\__\\___|_| |_|",
+        "{{bold}}{{purple}}                      __/ |                      ",
+        "{{bold}}{{purple}}                     |___/                       "
     ],
 }

@@ -98,20 +98,10 @@ class MeowfetchColourFormatter:
             nonlocal ActiveTags, Result
             TagSpec = Match.group(1).strip().lower()
             
-            if TagSpec == "reset":
-                # Close all active tags
-                if ActiveTags:
-                    # Rich requires closing tags in reverse order or all at once
-                    ClosingTag = "[/" + " ".join(ActiveTags) + "]"
-                    Result.append(ClosingTag)
-                    ActiveTags.clear()
-                return ""
-            elif TagSpec == "normal":
-                # Close all active tags (same as reset)
-                if ActiveTags:
-                    ClosingTag = "[/" + " ".join(ActiveTags) + "]"
-                    Result.append(ClosingTag)
-                    ActiveTags.clear()
+            if TagSpec == "reset" or TagSpec == "normal":
+                # Close all active tags in reverse order, one by one
+                while ActiveTags:
+                    Result.append(f"[/{ActiveTags.pop()}]")
                 return ""
             else:
                 # Handle regular tags (colors and styles)
@@ -139,9 +129,9 @@ class MeowfetchColourFormatter:
         # Join all parts
         FormattedText = "".join(Result)
         
-        # Auto-close any remaining tags at the end
-        if ActiveTags:
-            FormattedText += "[/" + " ".join(ActiveTags) + "]"
+        # Auto-close any remaining tags at the end, in reverse order
+        while ActiveTags:
+            FormattedText += f"[/{ActiveTags.pop()}]"
         
         return FormattedText
     
