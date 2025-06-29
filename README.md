@@ -1,4 +1,4 @@
-# meowfetch
+# fancyfetch
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://itoj.dev/embed/Wwatermark.png">

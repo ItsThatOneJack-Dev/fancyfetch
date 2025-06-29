@@ -32,7 +32,7 @@ wheels = [
 ]
 
 [[package]]
-name = "meowfetch"
+name = "fancyfetch"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

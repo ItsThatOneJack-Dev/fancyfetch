@@ -1,7 +1,7 @@
 [project]
-name = "meowfetch"
+name = "fancyfetch"
 version = "0.1.0"
-description = "Add your description here"
+description = "A fancy, fast system information utility!"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
