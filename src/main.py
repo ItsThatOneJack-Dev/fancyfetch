@@ -1,8 +1,8 @@
-import setup as MeowfetchSetup
-import constants as MeowfetchConstants
-import configurationhandler as MeowfetchConfigurationHandler
-import formatting as MeowfetchFormatting
-import widgets as MeowfetchWidgets
+import setup as FancyfetchSetup
+import constants as FancyfetchConstants
+import configurationhandler as FancyfetchConfigurationHandler
+import formatting as FancyfetchFormatting
+import widgets as FancyfetchWidgets
 
 import shutil as ShellUtilityLibrary
 import os as OperatingSystemLibrary
@@ -18,13 +18,13 @@ def CompareChildren(OriginalDirectory, Directory):
     Files = set(GetChildren(Directory))
     return OriginalFiles - Files
 def HasConfigurationBeenChanged():
-    if (not MeowfetchConstants.WidgetsDirectory.exists()) or (not MeowfetchConstants.ConfigurationFile.exists()):
-        MeowfetchSetup.EnsureConfiguration()
+    if (not FancyfetchConstants.WidgetsDirectory.exists()) or (not FancyfetchConstants.ConfigurationFile.exists()):
+        FancyfetchSetup.EnsureConfiguration()
         print("Your configuration has been regenerated!")
         exit(0)
-    if len(CompareChildren(MeowfetchConstants.WidgetsDirectory, MeowfetchConstants.DefaultWidgetsDirectory)) > 0:
+    if len(CompareChildren(FancyfetchConstants.WidgetsDirectory, FancyfetchConstants.DefaultWidgetsDirectory)) > 0:
         return True
-    if open(MeowfetchConstants.ConfigurationFile, "r").read() != open(MeowfetchConstants.DefaultConfigurationFile, "r").read():
+    if open(FancyfetchConstants.ConfigurationFile, "r").read() != open(FancyfetchConstants.DefaultConfigurationFile, "r").read():
         return True
 
 def OPTION_RegenerateConfiguration():
@@ -36,8 +36,8 @@ def OPTION_RegenerateConfiguration():
         print("Type 'yes' to confirm, or anything else to cancel.")
         Confirmation = input().strip().lower()
         if Confirmation.lower().strip() in "yes":
-            ShellUtilityLibrary.rmtree(MeowfetchConstants.ConfigurationDirectory, ignore_errors=True)
-            MeowfetchSetup.EnsureConfiguration()
+            ShellUtilityLibrary.rmtree(FancyfetchConstants.ConfigurationDirectory, ignore_errors=True)
+            FancyfetchSetup.EnsureConfiguration()
             print("Your configuration has been regenerated!")
             exit(0)
         else:
@@ -45,7 +45,7 @@ def OPTION_RegenerateConfiguration():
             exit(0)
 
 def OPTION_Configuration():
-    MeowfetchSetup.EnsureConfiguration()
+    FancyfetchSetup.EnsureConfiguration()
     print("Configuration files are accessible at '~/.config/fancyfetch/'!")
     exit(0)
 
@@ -78,8 +78,8 @@ def Main():
     elif Args.regen:
         OPTION_RegenerateConfiguration()
 
-    MeowfetchSetup.EnsureConfiguration()
-    Configuration = MeowfetchConfigurationHandler.FetchConfiguration()
+    FancyfetchSetup.EnsureConfiguration()
+    Configuration = FancyfetchConfigurationHandler.FetchConfiguration()
 
     CONFIG_DisplayASCII = Configuration.get("display_ascii", True) # Default to True if not set.
     CONFIG_ASCIILocation = Configuration.get("ascii_location", "left") # Default to "left" if not set.
@@ -90,13 +90,13 @@ def Main():
 
     ASCII = CONFIG_ASCII if CONFIG_DisplayASCII else []
     try:
-        Layout = [MeowfetchWidgets.LoadWidget(str(MeowfetchConstants.WidgetsDirectory), X) for X in CONFIG_Layout]
+        Layout = [FancyfetchWidgets.LoadWidget(str(FancyfetchConstants.WidgetsDirectory), X) for X in CONFIG_Layout]
     except ValueError as e:
         print(e.args[0])
         exit(1)
 
-    MeowfetchFormatting.MeowfetchColourFormatter(None).Print(
-        MeowfetchFormatting.Formatter(
+    FancyfetchFormatting.FancyfetchColourFormatter(None).Print(
+        FancyfetchFormatting.Formatter(
             ASCII,
             Layout,
             ShellUtilityLibrary.get_terminal_size().columns,
@@ -110,5 +110,5 @@ if __name__ == "__main__":
     try:
         Main()
     except KeyboardInterrupt:
-        print("\nExiting Meowfetch...")
+        print("\nExiting Fancyfetch...")
         exit(0)

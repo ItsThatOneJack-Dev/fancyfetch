@@ -2,14 +2,15 @@ import re as RegexLibrary
 from rich.console import Console as RichConsole
 from typing import Dict, Optional
 
-def RemoveDirectives(Text: str):return RegexLibrary.sub(r"\{\{.*?\}\}", "", Text)
+def RemoveDirectives(Text: str):
+    return RegexLibrary.sub(r"<:.*?:>", "", Text)
 
 def EnsureResetEnding(Line):
-        if not Line.endswith("{{reset}}"):
-            return Line + "{{reset}}"
-        return Line
+    if not Line.endswith("<:reset:>"):
+        return Line + "<:reset:>"
+    return Line
 
-class MeowfetchColourFormatter:
+class FancyfetchColourFormatter:
     def __init__(self, CustomColours: Optional[Dict[str, str]] = None):
         self.Console = RichConsole(highlight=False)
        
@@ -47,7 +48,7 @@ class MeowfetchColourFormatter:
         if CustomColours:
             self.ColourMap.update(CustomColours)
        
-        self.TagPattern = RegexLibrary.compile(r"\{\{([^}]+)\}\}")
+        self.TagPattern = RegexLibrary.compile(r"<:([^:]+):>")
    
     def AddColour(self, Name: str, HexCode: str):
         self.ColourMap[Name.lower()] = HexCode
@@ -148,21 +149,24 @@ class MeowfetchColourFormatter:
 def FormatASCII(Lines, TargetLength:int|None=None):
     def ExtractVisibleText(Line):
         VisibleChars = []
-        InDirective = False
-        BraceCount = 0
+        I = 0
         
-        for I, Char in enumerate(Line):
-            if Char == "{" and I + 1 < len(Line) and Line[I + 1] == "{":
-                InDirective = True
-                BraceCount = 1
-            elif Char == "{" and InDirective:
-                BraceCount += 1
-            elif Char == "}" and InDirective:
-                BraceCount -= 1
-                if BraceCount == 0:
-                    InDirective = False
-            elif not InDirective:
-                VisibleChars.append((Char, I))
+        while I < len(Line):
+            # Check for start of directive <:
+            if I + 1 < len(Line) and Line[I:I+2] == "<:":
+                # Find the end of directive :>
+                EndPos = Line.find(":>", I + 2)
+                if EndPos != -1:
+                    # Skip the entire directive including :>
+                    I = EndPos + 2
+                else:
+                    # Malformed directive, treat as visible character
+                    VisibleChars.append((Line[I], I))
+                    I += 1
+            else:
+                # Regular visible character
+                VisibleChars.append((Line[I], I))
+                I += 1
         
         return VisibleChars
     
@@ -185,29 +189,30 @@ def FormatASCII(Lines, TargetLength:int|None=None):
             CutoffPos = VisibleChars[TargetLen - 1][1] + 1
         
         Result = []
-        InDirective = False
-        BraceCount = 0
+        I = 0
         
-        for I, Char in enumerate(Line):
-            if I >= CutoffPos and not InDirective:
-                break
-                
-            Result.append(Char)
-            
-            if Char == "{" and I + 1 < len(Line) and Line[I + 1] == "{":
-                InDirective = True
-                BraceCount = 1
-            elif Char == "{" and InDirective:
-                BraceCount += 1
-            elif Char == "}" and InDirective:
-                BraceCount -= 1
-                if BraceCount == 0:
-                    InDirective = False
+        while I < len(Line):
+            if I >= CutoffPos:
+                # Check if we're in the middle of a directive
+                if I + 1 < len(Line) and Line[I:I+2] == "<:":
+                    # Find the end of this directive and include it
+                    EndPos = Line.find(":>", I + 2)
+                    if EndPos != -1:
+                        # Include the complete directive
+                        Result.extend(Line[I:EndPos+2])
+                        I = EndPos + 2
+                    else:
+                        break
+                else:
+                    break
+            else:
+                Result.append(Line[I])
+                I += 1
         
         ResultStr = "".join(Result)
         
-        if not ResultStr.endswith("{{reset}}"):
-            ResultStr += "{{reset}}"
+        if not ResultStr.endswith("<:reset:>"):
+            ResultStr += "<:reset:>"
         
         return ResultStr
     
@@ -227,9 +232,9 @@ def FormatASCII(Lines, TargetLength:int|None=None):
     for Line in ProcessedLines:
         VisibleLength = GetVisibleLength(Line)
         if VisibleLength < MaxVisibleLength:
-            if Line.endswith("{{reset}}"):
+            if Line.endswith("<:reset:>"):
                 SpacesNeeded = MaxVisibleLength - VisibleLength
-                AlignedLine = Line[:-9] + " " * SpacesNeeded + "{{reset}}"
+                AlignedLine = Line[:-10] + " " * SpacesNeeded + "<:reset:>"
             else:
                 SpacesNeeded = MaxVisibleLength - VisibleLength
                 AlignedLine = Line + " " * SpacesNeeded

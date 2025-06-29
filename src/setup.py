@@ -1,11 +1,11 @@
 import shutil as ShellUtilityLibrary
 import os as OperatingSystemLibrary
 
-import constants as MeowfetchConstants
+import constants as FancyfetchConstants
 
 # Functions
 def EnsureConfigurationDirectory():
-    MeowfetchConstants.ConfigurationDirectory.mkdir(exist_ok=True, parents=True)
+    FancyfetchConstants.ConfigurationDirectory.mkdir(exist_ok=True, parents=True)
 
 def CopyDirectoryContents(SourceDirectory, DestinationDirectory):
     for Item in OperatingSystemLibrary.listdir(SourceDirectory):
@@ -19,7 +19,7 @@ def CopyDirectoryContents(SourceDirectory, DestinationDirectory):
             ShellUtilityLibrary.copy(SourceItem, DestinationItem)
 
 def EnsureConfiguration():
-    if not MeowfetchConstants.ConfigurationDirectory.exists():
+    if not FancyfetchConstants.ConfigurationDirectory.exists():
         EnsureConfigurationDirectory()
-        CopyDirectoryContents(MeowfetchConstants.DefaultConfiguationDirectory, MeowfetchConstants.ConfigurationDirectory)
+        CopyDirectoryContents(FancyfetchConstants.DefaultConfiguationDirectory, FancyfetchConstants.ConfigurationDirectory)
 
