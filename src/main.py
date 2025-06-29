@@ -46,7 +46,7 @@ def OPTION_RegenerateConfiguration():
 
 def OPTION_Configuration():
     MeowfetchSetup.EnsureConfiguration()
-    print("Configuration files are accessible at '~/.config/meowfetch/'!")
+    print("Configuration files are accessible at '~/.config/fancyfetch/'!")
     exit(0)
 
 def SetupArgumentParser():
@@ -59,13 +59,13 @@ def SetupArgumentParser():
     Parser.add_argument(
         '--config', '-c',
         action='store_true',
-        help='Get the location of the meowfetch configuration files!'
+        help='Get the location of the fancyfetch configuration files!'
     )
     
     Parser.add_argument(
         '--regen', '-r', 
         action='store_true',
-        help='Regenerate the meowfetch configuration files, resetting them to default values!'
+        help='Regenerate the fancyfetch configuration files, resetting them to default values!'
     )
     
     return Parser
@@ -84,7 +84,7 @@ def Main():
     CONFIG_DisplayASCII = Configuration.get("display_ascii", True) # Default to True if not set.
     CONFIG_ASCIILocation = Configuration.get("ascii_location", "left") # Default to "left" if not set.
     CONFIG_Spacing = Configuration.get("spacing", 5) # Default to 5 if not set.
-    CONFIG_ASCII = Configuration.get("ascii", ["You have no ASCII defined!","Set the 'ascii' key in your config!","Or run meowfetch with the '--regen'/'-r' flag!"]) # Default to a warning if not set.
+    CONFIG_ASCII = Configuration.get("ascii", ["You have no ASCII defined!","Set the 'ascii' key in your config!","Or run fancyfetch with the '--regen'/'-r' flag!"]) # Default to a warning if not set.
 
     CONFIG_Layout = Configuration.get("layout", ["hello","datetime","credits"]) # Default to ["hello", "datetime"] if not set.
 

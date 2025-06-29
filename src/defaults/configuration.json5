@@ -4,10 +4,10 @@
 
 
 
-    // As part of Meowfetch's limitless customisability, you can create your own widgets.
+    // As part of Fancyfetch's limitless customisability, you can create your own widgets.
     // Beware: Widgets execute code, make sure you know what the code will do.
 
-    // Meowfetch is not responsible for any damage you, or someone else cause using custom widgets!
+    // Fancyfetch is not responsible for any damage you, or someone else cause using custom widgets!
 
     // To make a widget, make a Python file in the `widgets` directory.
     // The file's name (excluding `.py`) is what the widget will be called.
