@@ -18,7 +18,6 @@
     "layout":[
         "os",
         "hostname",
-        "architecture"
     ],
 
     ////////////////////// ASCII ART CONFIGURATION //////////////////////
