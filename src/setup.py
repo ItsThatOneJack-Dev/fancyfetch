@@ -19,6 +19,7 @@ def CopyDirectoryContents(SourceDirectory, DestinationDirectory):
             ShellUtilityLibrary.copy(SourceItem, DestinationItem)
 
 def EnsureConfiguration():
-    EnsureConfigurationDirectory()
-    CopyDirectoryContents(MeowfetchConstants.DefaultConfiguationDirectory, MeowfetchConstants.ConfigurationDirectory)
+    if not MeowfetchConstants.ConfigurationDirectory.exists():
+        EnsureConfigurationDirectory()
+        CopyDirectoryContents(MeowfetchConstants.DefaultConfiguationDirectory, MeowfetchConstants.ConfigurationDirectory)
 
