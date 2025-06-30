@@ -1,9 +1,9 @@
-import re as RegexLibrary
+import re as re
 from rich.console import Console as RichConsole
 from typing import Dict, Optional
 
 def RemoveDirectives(Text: str):
-    return RegexLibrary.sub(r"<:.*?:>", "", Text)
+    return re.sub(r"<:.*?:>", "", Text)
 
 def EnsureResetEnding(Line):
     if not Line.endswith("<:reset:>"):
@@ -48,7 +48,7 @@ class FancyfetchColourFormatter:
         if CustomColours:
             self.ColourMap.update(CustomColours)
        
-        self.TagPattern = RegexLibrary.compile(r"<:([^:]+):>")
+        self.TagPattern = re.compile(r"<:([^:]+):>")
    
     def AddColour(self, Name: str, HexCode: str):
         self.ColourMap[Name.lower()] = HexCode
@@ -61,15 +61,15 @@ class FancyfetchColourFormatter:
         
         # Check for hex codes with # prefix
         if ColourStr.startswith("#") and len(ColourStr) in [4, 7]:
-            if RegexLibrary.match(r"^#[0-9a-f]{3}$", ColourStr):  # Added $ anchor
+            if re.match(r"^#[0-9a-f]{3}$", ColourStr):  # Added $ anchor
                 return f"#{ColourStr[1]*2}{ColourStr[2]*2}{ColourStr[3]*2}"
-            elif RegexLibrary.match(r"^#[0-9a-f]{6}$", ColourStr):  # Added $ anchor
+            elif re.match(r"^#[0-9a-f]{6}$", ColourStr):  # Added $ anchor
                 return ColourStr
     
         # Check for hex codes without # prefix
-        elif RegexLibrary.match(r"^[0-9a-f]{6}$", ColourStr):  # Added $ anchor
+        elif re.match(r"^[0-9a-f]{6}$", ColourStr):  # Added $ anchor
             return f"#{ColourStr}"
-        elif RegexLibrary.match(r"^[0-9a-f]{3}$", ColourStr):  # Added $ anchor
+        elif re.match(r"^[0-9a-f]{3}$", ColourStr):  # Added $ anchor
             return f"#{ColourStr[0]*2}{ColourStr[1]*2}{ColourStr[2]*2}"
         
         # Check named colors

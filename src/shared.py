@@ -1,9 +1,9 @@
-import pathlib as PathLibrary
+import pathlib
 
-ConfigurationDirectory = PathLibrary.Path("~/.config/fancyfetch").expanduser()
+ConfigurationDirectory = pathlib.Path("~/.config/fancyfetch").expanduser()
 ConfigurationFile = ConfigurationDirectory / "configuration.json5"
 ConstantsDirectory = ConfigurationDirectory / "constants"
 
-DefaultConfiguationDirectory = PathLibrary.Path(__file__).parent / "defaults"
+DefaultConfiguationDirectory = pathlib.Path(__file__).parent / "defaults"
 DefaultConfigurationFile = DefaultConfiguationDirectory / "configuration.json5"
 DefaultConstantsDirectory = DefaultConfiguationDirectory / "constants"

@@ -4,15 +4,15 @@ import configurationhandler as FancyfetchConfigurationHandler
 import formatting as FancyfetchFormatting
 import constants as FancyfetchConstants
 
-import shutil as ShellUtilityLibrary
-import os as OperatingSystemLibrary
-import argparse as ArgumentParserLibrary
+import shutil 
+import os
+import argparse
 
 from sys import exit # Replaces `exit` as provided by the internal Python `site` library, preventing errors in compiled executables.
 
 def GetChildren(Directory):
     try:
-        return OperatingSystemLibrary.listdir(Directory)
+        return os.listdir(Directory)
     except (OSError, FileNotFoundError):
         return []
 def CompareChildren(OriginalDirectory, Directory):
@@ -32,30 +32,28 @@ def HasConfigurationBeenChanged():
 def OPTION_RegenerateConfiguration():
     if not HasConfigurationBeenChanged():
         print("Your configuration has not been changed, no need to regenerate it!")
-        exit(0)
     else:
         print("Are you sure you want to regenerate your configuration? This will reset everything to default!")
         print("Enter your choice (yes/NO): ")
         Confirmation = input("> ").strip().lower()
         if Confirmation.lower().strip() in "yes":
-            ShellUtilityLibrary.rmtree(FancyfetchShared.ConfigurationDirectory, ignore_errors=True)
+            shutil.rmtree(FancyfetchShared.ConfigurationDirectory, ignore_errors=True)
             FancyfetchSetup.EnsureConfiguration()
             print("Your configuration has been regenerated!")
-            exit(0)
         else:
             print("Configuration regeneration cancelled!")
-            exit(0)
+    exit(0)
 
 def OPTION_Configuration():
     FancyfetchSetup.EnsureConfiguration()
-    print("Configuration files are accessible at '~/.config/fancyfetch/'!")
+    print(f"Configuration files are accessible at '{FancyfetchShared.ConfigurationFile}'!")
     exit(0)
 
 def SetupArgumentParser():
-    Parser = ArgumentParserLibrary.ArgumentParser(
+    Parser = argparse.ArgumentParser(
         description="Your custom help message goes here. Describe what your program does.",
         epilog="Additional help text can go here at the bottom.",
-        formatter_class=ArgumentParserLibrary.RawDescriptionHelpFormatter
+        formatter_class=argparse.RawDescriptionHelpFormatter
     )
     
     Parser.add_argument(
@@ -109,7 +107,7 @@ def Main():
         FancyfetchFormatting.Formatter(
             ASCII,
             Layout,
-            ShellUtilityLibrary.get_terminal_size().columns,
+            shutil.get_terminal_size().columns,
             CONFIG_ASCIILocation,
             CONFIG_Spacing
         )

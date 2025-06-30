@@ -1,4 +1,4 @@
-import importlib.util as ImportLibraryUtilities
+import importlib.util
 import pathlib as PathLibrary
 
 def LoadWidget(Directory, Filename):
@@ -11,11 +11,11 @@ def LoadWidget(Directory, Filename):
         print(f"File {Filename} not found in {Directory}")
         raise ValueError(f"You attempted to use the constant {Filename.rstrip('.py')}, but a constant definition for it could not be found, it must be a direct child of {Directory}!")
     
-    Spec = ImportLibraryUtilities.spec_from_file_location("temp_module", FilePath)
+    Spec = importlib.util.spec_from_file_location("temp_module", FilePath)
     if Spec is None:
         raise ValueError(f"An error occured while processing the definition for the constant {Filename.rstrip('.py')}. A spec for the file could not be generated.")
     
-    Module = ImportLibraryUtilities.module_from_spec(Spec)
+    Module = importlib.util.module_from_spec(Spec)
     Spec.loader.exec_module(Module) # type: ignore
     
     if not hasattr(Module, 'Widget'):

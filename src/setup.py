@@ -1,5 +1,5 @@
-import shutil as ShellUtilityLibrary
-import os as OperatingSystemLibrary
+import shutil
+import os
 
 import shared as FancyfetchShared
 
@@ -8,15 +8,15 @@ def EnsureConfigurationDirectory():
     FancyfetchShared.ConfigurationDirectory.mkdir(exist_ok=True, parents=True)
 
 def CopyDirectoryContents(SourceDirectory, DestinationDirectory):
-    for Item in OperatingSystemLibrary.listdir(SourceDirectory):
-        SourceItem = OperatingSystemLibrary.path.join(SourceDirectory, Item)
-        DestinationItem = OperatingSystemLibrary.path.join(DestinationDirectory, Item)
+    for Item in os.listdir(SourceDirectory):
+        SourceItem = os.path.join(SourceDirectory, Item)
+        DestinationItem = os.path.join(DestinationDirectory, Item)
         
-        if OperatingSystemLibrary.path.isdir(SourceItem):
-            ShellUtilityLibrary.copytree(SourceItem, DestinationItem, dirs_exist_ok=True)
+        if os.path.isdir(SourceItem):
+            shutil.copytree(SourceItem, DestinationItem, dirs_exist_ok=True)
         else:
-            OperatingSystemLibrary.makedirs(DestinationDirectory, exist_ok=True)
-            ShellUtilityLibrary.copy(SourceItem, DestinationItem)
+            os.makedirs(DestinationDirectory, exist_ok=True)
+            shutil.copy(SourceItem, DestinationItem)
 
 def EnsureConfiguration():
     if not FancyfetchShared.ConfigurationFile.exists():
