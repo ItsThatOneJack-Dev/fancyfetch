@@ -35,8 +35,8 @@ def OPTION_RegenerateConfiguration():
         exit(0)
     else:
         print("Are you sure you want to regenerate your configuration? This will reset everything to default!")
-        print("Type 'yes' to confirm, or anything else to cancel.")
-        Confirmation = input().strip().lower()
+        print("Enter your choice (yes/NO): ")
+        Confirmation = input("> ").strip().lower()
         if Confirmation.lower().strip() in "yes":
             ShellUtilityLibrary.rmtree(FancyfetchShared.ConfigurationDirectory, ignore_errors=True)
             FancyfetchSetup.EnsureConfiguration()

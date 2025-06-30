@@ -19,6 +19,12 @@
     "layout":[
         "os",
         "hostname",
+        "fill",
+        "fill",
+        "fill",
+        "fill",
+        "fill",
+        "colourswatch"
     ],
 
     ////////////////////// ASCII ART CONFIGURATION //////////////////////
