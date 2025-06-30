@@ -1,12 +1,14 @@
 import setup as FancyfetchSetup
-import constants as FancyfetchConstants
+import shared as FancyfetchShared
 import configurationhandler as FancyfetchConfigurationHandler
 import formatting as FancyfetchFormatting
-import widgets as FancyfetchWidgets
+import constants as FancyfetchConstants
 
 import shutil as ShellUtilityLibrary
 import os as OperatingSystemLibrary
 import argparse as ArgumentParserLibrary
+
+from sys import exit # Replaces `exit` as provided by the internal Python `site` library, preventing errors in compiled executables.
 
 def GetChildren(Directory):
     try:
@@ -18,13 +20,13 @@ def CompareChildren(OriginalDirectory, Directory):
     Files = set(GetChildren(Directory))
     return OriginalFiles - Files
 def HasConfigurationBeenChanged():
-    if (not FancyfetchConstants.WidgetsDirectory.exists()) or (not FancyfetchConstants.ConfigurationFile.exists()):
+    if (not FancyfetchShared.ConstantsDirectory.exists()) or (not FancyfetchShared.ConfigurationFile.exists()):
         FancyfetchSetup.EnsureConfiguration()
         print("Your configuration has been regenerated!")
         exit(0)
-    if len(CompareChildren(FancyfetchConstants.WidgetsDirectory, FancyfetchConstants.DefaultWidgetsDirectory)) > 0:
+    if len(CompareChildren(FancyfetchShared.ConstantsDirectory, FancyfetchShared.DefaultConstantsDirectory)) > 0:
         return True
-    if open(FancyfetchConstants.ConfigurationFile, "r").read() != open(FancyfetchConstants.DefaultConfigurationFile, "r").read():
+    if open(FancyfetchShared.ConfigurationFile, "r").read() != open(FancyfetchShared.DefaultConfigurationFile, "r").read():
         return True
 
 def OPTION_RegenerateConfiguration():
@@ -36,7 +38,7 @@ def OPTION_RegenerateConfiguration():
         print("Type 'yes' to confirm, or anything else to cancel.")
         Confirmation = input().strip().lower()
         if Confirmation.lower().strip() in "yes":
-            ShellUtilityLibrary.rmtree(FancyfetchConstants.ConfigurationDirectory, ignore_errors=True)
+            ShellUtilityLibrary.rmtree(FancyfetchShared.ConfigurationDirectory, ignore_errors=True)
             FancyfetchSetup.EnsureConfiguration()
             print("Your configuration has been regenerated!")
             exit(0)
@@ -86,11 +88,19 @@ def Main():
     CONFIG_Spacing = Configuration.get("spacing", 5) # Default to 5 if not set.
     CONFIG_ASCII = Configuration.get("ascii", ["You have no ASCII defined!","Set the 'ascii' key in your config!","Or run fancyfetch with the '--regen'/'-r' flag!"]) # Default to a warning if not set.
 
-    CONFIG_Layout = Configuration.get("layout", ["hello","datetime","credits"]) # Default to ["hello", "datetime"] if not set.
+    CONFIG_Layout = Configuration.get("layout", ["os","hostname"]) # Default to ["hello", "datetime"] if not set.
 
     ASCII = CONFIG_ASCII if CONFIG_DisplayASCII else []
+    Layout = []
     try:
-        Layout = [FancyfetchWidgets.LoadWidget(str(FancyfetchConstants.WidgetsDirectory), X) for X in CONFIG_Layout]
+        for X in CONFIG_Layout:
+            Current = FancyfetchConstants.LoadWidget(str(FancyfetchShared.ConstantsDirectory),X)
+            if isinstance(Current, str):
+                Current = Current.replace("\r\n","\n").split("\n")
+                Layout = Layout + Current
+            elif isinstance(Current, list):
+                for I in Current:
+                    Layout.append(I.replace("\r\n","\n").split("\n"))
     except ValueError as e:
         print(e.args[0])
         exit(1)

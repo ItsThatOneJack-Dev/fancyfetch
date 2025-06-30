@@ -1,11 +1,11 @@
 import shutil as ShellUtilityLibrary
 import os as OperatingSystemLibrary
 
-import constants as FancyfetchConstants
+import shared as FancyfetchShared
 
 # Functions
 def EnsureConfigurationDirectory():
-    FancyfetchConstants.ConfigurationDirectory.mkdir(exist_ok=True, parents=True)
+    FancyfetchShared.ConfigurationDirectory.mkdir(exist_ok=True, parents=True)
 
 def CopyDirectoryContents(SourceDirectory, DestinationDirectory):
     for Item in OperatingSystemLibrary.listdir(SourceDirectory):
@@ -19,7 +19,7 @@ def CopyDirectoryContents(SourceDirectory, DestinationDirectory):
             ShellUtilityLibrary.copy(SourceItem, DestinationItem)
 
 def EnsureConfiguration():
-    if not FancyfetchConstants.ConfigurationDirectory.exists():
+    if not FancyfetchShared.ConfigurationFile.exists():
         EnsureConfigurationDirectory()
-        CopyDirectoryContents(FancyfetchConstants.DefaultConfiguationDirectory, FancyfetchConstants.ConfigurationDirectory)
+        CopyDirectoryContents(FancyfetchShared.DefaultConfiguationDirectory, FancyfetchShared.ConfigurationDirectory)
 

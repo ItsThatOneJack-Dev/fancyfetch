@@ -4,17 +4,18 @@
 
 
 
-    // As part of Fancyfetch's limitless customisability, you can create your own widgets.
-    // Beware: Widgets execute code, make sure you know what the code will do.
+    // As part of Fancyfetch's limitless customisability, you can create your own constants.
+    // A constant is a piece of Python code that is executed by fancyfetch, the value it returns is what is used in your layout!
+    // Beware: Constants execute code, make sure you know what the code will do.
 
-    // Fancyfetch is not responsible for any damage you, or someone else cause using custom widgets!
+    // Fancyfetch is not responsible for any damage you, or someone else cause using custom constants!
 
-    // To make a widget, make a Python file in the `widgets` directory.
-    // The file's name (excluding `.py`) is what the widget will be called.
+    // To make a constant, make a Python file in the `constants` directory.
+    // The file's name (excluding `.py`) is what the constant will be called.
     // The file must contain a class named `Widget`, which must have a method named `Get()`.
-    // `Get()` will be provided no arguments, but should return something that can be converted to a string, this is the value of the widget.
+    // `Get()` will be provided no arguments, but should return something that can be converted to a string, this is the value of the constant.
 
-    // The order in which to display widgets.
+    // The order in which to display constants.
     "layout":[
         "os",
         "hostname",
