@@ -1,6 +1,9 @@
 # .github/workflows/build-release.yml
 name: Build Release
 
+permissions:
+  contents: write
+
 on:
   release:
     types: [published]
@@ -67,16 +70,22 @@ jobs:
         with:
           name: fancyfetch-${{runner.os}}
           path: |
-            fancyfetch-*.tar.gz
-            fancyfetch-*.zip
+            ./fancyfetch-*.tar.gz
+            ./fancyfetch-*.zip
           retention-days: 30
       
-      - name: Upload to release (on release only)
-        if: github.event_name == 'release'
+      - name: Upload to release (Linux/Mac)
+        if: github.event_name == 'release' && runner.os != 'Windows'
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            fancyfetch-*.tar.gz
-            fancyfetch-*.zip
+          files: ./fancyfetch-*.tar.gz
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
+      - name: Upload to release (Windows)
+        if: github.event_name == 'release' && runner.os == 'Windows'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./fancyfetch-*.zip
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
