@@ -10,5 +10,5 @@
 </br></br>
 This work is licensed under the terms of the content of the LICENSE file.
 </br></br>
-Meowfetch, a terminal fetch utility for cats and humans alike!
+Fancyfetch, a fancy terminal fetch utility for cats and humans alike!
 Made with ❤️ by ItsThatOneJack!
